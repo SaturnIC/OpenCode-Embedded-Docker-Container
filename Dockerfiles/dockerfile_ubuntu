@@ -14,11 +14,10 @@ RUN apt-get update && apt-get install -y \
     virtualenv \
     && rm -rf /var/lib/apt/lists/*
 
-# Install OpenCode
-RUN curl -fsSL https://opencode.ai/install | bash
-
-# Add OpenCode to PATH
-ENV PATH="/root/.opencode/bin:${PATH}"
+# Install OpenCode as root, then copy to system-wide location
+RUN curl -fsSL https://opencode.ai/install | bash && \
+    cp /root/.opencode/bin/opencode /usr/local/bin/opencode && \
+    chmod +x /usr/local/bin/opencode
 
 # Default shell
 CMD ["/bin/bash"]

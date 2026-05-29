@@ -44,7 +44,7 @@ docker run -it \
 ### Run as User
 ```bash
 docker run -it \
-    -v $HOME/.config/opencode:/root/.config/opencode \
+    -v $HOME/.config/opencode:$HOME/.config/opencode \
     -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
     -v $(pwd):$(pwd) --workdir $(pwd) \
     opencode 
