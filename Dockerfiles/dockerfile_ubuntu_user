@@ -1,0 +1,31 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Create user michael with writable home
+RUN groupadd -g 1000 michael && \
+    useradd -m -u 1000 -g michael -s /bin/bash michael && \
+    chown -R michael:michael /home/michael && \
+    chmod 755 /home/michael
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    git \
+    bash \
+    python3 \
+    python3-pip \
+    python3-venv \
+    virtualenv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install OpenCode as root, then copy to system-wide location
+RUN curl -fsSL https://opencode.ai/install | bash && \
+    cp /root/.opencode/bin/opencode /usr/local/bin/opencode && \
+    chmod +x /usr/local/bin/opencode
+
+USER michael
+WORKDIR /home/michael
+
+CMD ["/bin/bash"]

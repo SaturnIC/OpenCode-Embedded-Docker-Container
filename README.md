@@ -27,19 +27,17 @@ CMD ["/bin/bash"]
 
 ## Build
 
+### User Container
 ```bash
-docker build -f Dockerfiles/dockerfile_ubuntu -t opencode .
+docker build -f Dockerfiles/dockerfile_ubuntu_user -t opencode-user .
+```
+
+### Root Container
+```bash
+docker build -f Dockerfiles/dockerfile_ubuntu_root -t opencode-root .
 ```
 
 ## Run
-
-### Run as Administrator
-```bash
-docker run -it \
-    -v $HOME/.config/opencode:/root/.config/opencode \ 
-    -v $(pwd):/root/workdir --workdir /root/workdir \
-    opencode 
-```
 
 ### Run as User
 ```bash
@@ -47,7 +45,15 @@ docker run -it \
     -v $HOME/.config/opencode:$HOME/.config/opencode \
     -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
     -v $(pwd):$(pwd) --workdir $(pwd) \
-    opencode 
+    opencode-user
+```
+
+### Run as Root
+```bash
+docker run -it \
+    -v $HOME/.config/opencode:/root/.config/opencode \
+    -v $(pwd):/root/workdir --workdir /root/workdir \
+    opencode-root
 ```
 
 ### Verify installation inside the container:
