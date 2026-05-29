@@ -1,12 +1,14 @@
 FROM ubuntu:latest
 
+ARG APP_USER=michael
+
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Create user michael with writable home
-RUN groupadd -g 1000 michael && \
-    useradd -m -u 1000 -g michael -s /bin/bash michael && \
-    chown -R michael:michael /home/michael && \
-    chmod 755 /home/michael
+# Create user with writable home
+RUN groupadd -g 1000 ${APP_USER} && \
+    useradd -m -u 1000 -g ${APP_USER} -s /bin/bash ${APP_USER} && \
+    chown -R ${APP_USER}:${APP_USER} /home/${APP_USER} && \
+    chmod 755 /home/${APP_USER}
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -25,7 +27,7 @@ RUN curl -fsSL https://opencode.ai/install | bash && \
     cp /root/.opencode/bin/opencode /usr/local/bin/opencode && \
     chmod +x /usr/local/bin/opencode
 
-USER michael
-WORKDIR /home/michael
+USER ${APP_USER}
+WORKDIR /home/${APP_USER}
 
 CMD ["/bin/bash"]
