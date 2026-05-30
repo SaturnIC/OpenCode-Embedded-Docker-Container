@@ -29,4 +29,4 @@ RUN curl -fsSL https://opencode.ai/install | bash && \
 USER ${APP_USER}
 WORKDIR /home/${APP_USER}
 
-CMD ["/bin/bash"]
+CMD OPENCODE_ENABLE_EXA=1 opencode
