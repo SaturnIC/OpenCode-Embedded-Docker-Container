@@ -27,19 +27,31 @@ CMD ["/bin/bash"]
 
 ## Build
 
-### User Container
+### General Ubuntu Image
+
+#### User Image
 ```bash
 docker build -f Dockerfiles/dockerfile_ubuntu_user -t opencode-user .
 ```
 
-### Root Container
+#### Root Image
 ```bash
 docker build -f Dockerfiles/dockerfile_ubuntu_root -t opencode-root .
 ```
 
+### Node 24 Ubuntu Image
+
+#### User Image
+```bash
+docker build -f Dockerfiles/dockerfile_ubuntu_node_user -t opencode-node-user .
+```
+
+
 ## Run
 
 ### Run as User
+
+#### General
 ```bash
 docker run -it \
     -v $HOME/.config/opencode:$HOME/.config/opencode \
@@ -47,6 +59,20 @@ docker run -it \
     -v $(pwd):$(pwd) --workdir $(pwd) \
     opencode-user
 ```
+
+#### For CubeIDE and J-Link Embedded
+```bash
+docker run -it \
+    -v $HOME/.config/opencode:$HOME/.config/opencode \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
+    -v /opt/st/stm32cubeide_2.0.0/:/opt/st/stm32cubeide_2.0.0/ \
+    -v /opt/SEGGER/:/opt/SEGGER/ \
+    -v /dev/bus/usb:/dev/bus/usb \
+    --privileged \
+    -v $(pwd):$(pwd) --workdir $(pwd) \
+    opencode-user
+```
+
 
 ### Run as Root
 ```bash
