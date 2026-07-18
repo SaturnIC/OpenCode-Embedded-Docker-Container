@@ -46,6 +46,13 @@ docker build -f Dockerfiles/dockerfile_ubuntu_root -t opencode-root .
 docker build -f Dockerfiles/dockerfile_ubuntu_node_user -t opencode-node-user .
 ```
 
+### Max Image (Node + Android Build Environment)
+
+#### User Image
+```bash
+docker build -f Dockerfiles/dockerfile_ubuntu_max_user -t opencode-user-max .
+```
+
 
 ## Run
 
@@ -72,6 +79,18 @@ docker run -it \
     -v $(pwd):$(pwd) --workdir $(pwd) \
     opencode-user
 ```
+
+#### For Android Development (opencode-user-max)
+```bash
+docker run -it \
+    -v $HOME/.config/opencode:$HOME/.config/opencode \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
+    -v $HOME/Android/Sdk:/opt/android-sdk \
+    -v $(pwd):$(pwd) --workdir $(pwd) \
+    opencode-user-max
+```
+
+Adjust `$HOME/Android/Sdk` to match your host Android SDK path.
 
 
 ### Run as Root
