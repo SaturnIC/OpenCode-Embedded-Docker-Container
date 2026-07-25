@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     virtualenv \
     cppcheck \
+    clang-tidy \
     && rm -rf /var/lib/apt/lists/*
 
 # Install OpenCode as root, then copy to system-wide location
