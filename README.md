@@ -61,32 +61,32 @@ docker build -f Dockerfiles/dockerfile_ubuntu_max_user -t opencode-user-max .
 #### General
 ```bash
 docker run -it \
-    -v $HOME/.config/opencode:$HOME/.config/opencode \
-    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
-    -v $(pwd):$(pwd) --workdir $(pwd) \
+    -v "$HOME/.config/opencode:$HOME/.config/opencode" \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user "$(id --user):$(id --group)" \
+    -v "$(pwd):$(pwd)" --workdir "$(pwd)" \
     opencode-user
 ```
 
 #### For CubeIDE and J-Link Embedded
 ```bash
 docker run -it \
-    -v $HOME/.config/opencode:$HOME/.config/opencode \
-    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
+    -v "$HOME/.config/opencode:$HOME/.config/opencode" \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user "$(id --user):$(id --group)" \
     -v /opt/st/stm32cubeide_2.0.0/:/opt/st/stm32cubeide_2.0.0/ \
     -v /opt/SEGGER/:/opt/SEGGER/ \
     -v /dev/bus/usb:/dev/bus/usb \
     --privileged \
-    -v $(pwd):$(pwd) --workdir $(pwd) \
+    -v "$(pwd):$(pwd)" --workdir "$(pwd)" \
     opencode-user
 ```
 
 #### For Android Development (opencode-user-max)
 ```bash
 docker run -it \
-    -v $HOME/.config/opencode:$HOME/.config/opencode \
-    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user $(id --user):$(id --group) \
-    -v $HOME/Android/Sdk:/opt/android-sdk \
-    -v $(pwd):$(pwd) --workdir $(pwd) \
+    -v "$HOME/.config/opencode:$HOME/.config/opencode" \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --user "$(id --user):$(id --group)" \
+    -v "$HOME/Android/Sdk:/opt/android-sdk" \
+    -v "$(pwd):$(pwd)" --workdir "$(pwd)" \
     opencode-user-max
 ```
 
@@ -96,8 +96,8 @@ Adjust `$HOME/Android/Sdk` to match your host Android SDK path.
 ### Run as Root
 ```bash
 docker run -it \
-    -v $HOME/.config/opencode:/root/.config/opencode \
-    -v $(pwd):/root/workdir --workdir /root/workdir \
+    -v "$HOME/.config/opencode:/root/.config/opencode" \
+    -v "$(pwd):/root/workdir" --workdir /root/workdir \
     opencode-root
 ```
 
