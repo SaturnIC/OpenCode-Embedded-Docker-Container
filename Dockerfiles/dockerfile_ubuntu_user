@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     cppcheck \
     clang-tidy \
+    clang-format \
     && rm -rf /var/lib/apt/lists/*
 
 # Install OpenCode as root, then copy to system-wide location
